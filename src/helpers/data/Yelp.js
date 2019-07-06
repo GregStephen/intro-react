@@ -15,7 +15,7 @@ const getBusinessNearMe = (latitude, longitude, search) => new Promise((resolve,
       },
     })
     .then((res) => {
-      resolve(res.data);
+      resolve(res.data.businesses);
     })
     .catch(err => reject(err));
 });
