@@ -36,7 +36,7 @@ class Map extends React.Component {
   updateMarkers(markersData) {
     this.layer.clearLayers();
     markersData.forEach((marker) => {
-      L.marker(marker.latLng, { title: marker.title }).addTo(this.layer);
+      L.marker(marker.latLng, { title: marker.title }).addTo(this.layer).bindPopup(`${marker.title}`);
     });
   }
 

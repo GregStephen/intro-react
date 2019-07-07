@@ -17,23 +17,23 @@ class App extends React.Component {
     ],
   };
 
-  addMarker = () => {
-    const { markersData } = this.state;
-    const lastMarker = markersData[markersData.length - 1];
+  // addMarker = () => {
+  //   const { markersData } = this.state;
+  //   const lastMarker = markersData[markersData.length - 1];
 
-    this.setState({
-      markersData: [
-        ...markersData,
-        {
-          title: +lastMarker.title + 1,
-          latLng: {
-            lat: lastMarker.latLng.lat + 0.0001,
-            lng: lastMarker.latLng.lng + 0.0001,
-          },
-        },
-      ],
-    });
-  };
+  //   this.setState({
+  //     markersData: [
+  //       ...markersData,
+  //       {
+  //         title: +lastMarker.title + 1,
+  //         latLng: {
+  //           lat: lastMarker.latLng.lat + 0.0001,
+  //           lng: lastMarker.latLng.lng + 0.0001,
+  //         },
+  //       },
+  //     ],
+  //   });
+  // };
 
   handleChange = (e) => {
     this.setState({ [e.target.name]: e.target.value });
@@ -47,6 +47,17 @@ class App extends React.Component {
         const yelpRes = res;
         console.error(yelpRes);
         this.setState({ yelpResults: yelpRes });
+        this.setState({ markersData: [] });
+        this.state.yelpResults.map(result => (
+          this.setState({
+            markersData: [
+              ...this.state.markersData,
+              {
+                title: result.name,
+                latLng: { lat: result.coordinates.latitude, lng: result.coordinates.longitude },
+              }],
+          })
+        ));
       }))
       .catch(err => console.error('cant get places', err));
   }
@@ -61,7 +72,7 @@ class App extends React.Component {
       <div className="App">
         <div className="mapDiv">
           <Map markersData={ markersData}/>
-          <button
+          {/* <button
           onClick={this.addMarker}
         >
           Add marker
@@ -74,7 +85,7 @@ class App extends React.Component {
               lng: {marker.latLng.lng},
             </li>
           ))}
-        </ul>
+        </ul> */}
         </div>
         <header className="App-header">
           <form onSubmit={this.searchYelp}>
